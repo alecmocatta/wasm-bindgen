@@ -27,6 +27,7 @@ enable-interning = ["std"]
 serde-serialize = ["serde", "serde_json", "std"]
 spans = []
 std = []
+std-unwrap = []
 
 # Opt-in for Rust language features that require a higher MSRV.
 #

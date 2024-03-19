@@ -1403,8 +1403,13 @@ pub fn anyref_heap_live_count() -> u32 {
 /// //     y.expect_throw("woopsie daisy!")
 /// ```
 pub trait UnwrapThrowExt<T>: Sized {
+    #[cfg(feature = "std-unwrap")]
+    #[track_caller]
+    fn unwrap_throw(self) -> T;
+
     /// Unwrap this `Option` or `Result`, but instead of panicking on failure,
     /// throw an exception to JavaScript.
+    #[cfg(not(feature = "std-unwrap"))]
     #[cfg_attr(
         any(
             debug_assertions,
@@ -1434,9 +1439,14 @@ pub trait UnwrapThrowExt<T>: Sized {
         }
     }
 
+    #[cfg(feature = "std-unwrap")]
+    #[track_caller]
+    fn expect_throw(self, message: &str) -> T;
+
     /// Unwrap this container's `T` value, or throw an error to JS with the
     /// given message if the `T` value is unavailable (e.g. an `Option<T>` is
     /// `None`).
+    #[cfg(not(feature = "std-unwrap"))]
     #[cfg_attr(
         any(
             debug_assertions,
@@ -1451,7 +1461,9 @@ impl<T> UnwrapThrowExt<T> for Option<T> {
     fn unwrap_throw(self) -> T {
         const MSG: &str = "called `Option::unwrap_throw()` on a `None` value";
 
-        if cfg!(all(
+        if cfg!(feature = "std-unwrap") {
+            self.unwrap()
+        } else if cfg!(all(
             target_arch = "wasm32",
             any(target_os = "unknown", target_os = "none")
         )) {
@@ -1472,7 +1484,9 @@ impl<T> UnwrapThrowExt<T> for Option<T> {
     }
 
     fn expect_throw(self, message: &str) -> T {
-        if cfg!(all(
+        if cfg!(feature = "std-unwrap") {
+            self.expect(message)
+        } else if cfg!(all(
             target_arch = "wasm32",
             any(target_os = "unknown", target_os = "none")
         )) {
@@ -1505,7 +1519,9 @@ where
     fn unwrap_throw(self) -> T {
         const MSG: &str = "called `Result::unwrap_throw()` on an `Err` value";
 
-        if cfg!(all(
+        if cfg!(feature = "std-unwrap") {
+            self.unwrap()
+        } else if cfg!(all(
             target_arch = "wasm32",
             any(target_os = "unknown", target_os = "none")
         )) {
@@ -1535,7 +1551,9 @@ where
     }
 
     fn expect_throw(self, message: &str) -> T {
-        if cfg!(all(
+        if cfg!(feature = "std-unwrap") {
+            self.expect(message)
+        } else if cfg!(all(
             target_arch = "wasm32",
             any(target_os = "unknown", target_os = "none")
         )) {
