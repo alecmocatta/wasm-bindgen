@@ -1,0 +1,17 @@
+{
+  "name": "synchronous-instantiation",
+  "collaborators": [
+    "The wasm-bindgen Developers"
+  ],
+  "version": "0.1.0",
+  "files": [
+    "synchronous_instantiation_bg.wasm",
+    "synchronous_instantiation.js",
+    "synchronous_instantiation.d.ts"
+  ],
+  "module": "synchronous_instantiation.js",
+  "types": "synchronous_instantiation.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

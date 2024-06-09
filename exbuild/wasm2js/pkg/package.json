@@ -1,0 +1,19 @@
+{
+  "name": "wasm2js",
+  "collaborators": [
+    "The wasm-bindgen Developers"
+  ],
+  "version": "0.1.0",
+  "files": [
+    "wasm2js_bg.wasm",
+    "wasm2js.js",
+    "wasm2js_bg.js",
+    "wasm2js.d.ts"
+  ],
+  "module": "wasm2js.js",
+  "types": "wasm2js.d.ts",
+  "sideEffects": [
+    "./wasm2js.js",
+    "./snippets/*"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "websockets",
+  "collaborators": [
+    "The wasm-bindgen Developers"
+  ],
+  "version": "0.1.0",
+  "files": [
+    "websockets_bg.wasm",
+    "websockets.js",
+    "websockets.d.ts"
+  ],
+  "module": "websockets.js",
+  "types": "websockets.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
