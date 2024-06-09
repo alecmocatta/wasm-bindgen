@@ -5444,6 +5444,7 @@ impl From<char> for JsString {
 }
 
 impl<'a> From<&'a JsString> for String {
+    #[track_caller]
     fn from(s: &'a JsString) -> Self {
         s.obj.as_string().unwrap_throw()
     }
